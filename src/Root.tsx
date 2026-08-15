@@ -1,6 +1,7 @@
 import React from "react";
 import { Composition } from "remotion";
 import { BingoIntro } from "./BingoIntro";
+import { Shot01CRT } from "./shots/Shot01CRT";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -9,6 +10,14 @@ export const RemotionRoot: React.FC = () => {
         id="BingoIntro"
         component={BingoIntro}
         durationInFrames={1680}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="Shot01CRT"
+        component={Shot01CRT}
+        durationInFrames={120}
         fps={30}
         width={1080}
         height={1920}
