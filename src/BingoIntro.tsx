@@ -64,24 +64,33 @@ export const BingoIntro: React.FC = () => {
         <Audio src={staticFile("vo/scene5.wav")} />
       </Sequence>
 
-      {/*
-        ---------------- SFX PLACEHOLDERS ----------------
-        These four files do NOT exist yet. Drop them into public/sfx/ and
-        uncomment the block below — importing them now would fail the render.
-
-        <Sequence from={0} name="SFX jingle">
-          <Audio src={staticFile("sfx/jingle.mp3")} volume={0.5} />
-        </Sequence>
-        <Sequence from={600} name="SFX bark">
-          <Audio src={staticFile("sfx/bark.mp3")} volume={0.6} />
-        </Sequence>
-        <Sequence from={626} durationInFrames={370} name="SFX panting">
-          <Audio src={staticFile("sfx/panting.mp3")} volume={0.15} />
-        </Sequence>
-        <Sequence from={1625} name="SFX huff">
-          <Audio src={staticFile("sfx/huff.mp3")} volume={0.5} />
-        </Sequence>
-      */}
+      {/* ---------------- SFX ---------------- */}
+      {/* Source is 14.472s; trimmed to the 1.5s intro before narration starts.
+          That head peaks at only -21.2 dBFS, so it is amplified to land just
+          under -3.6 dBFS peak — nothing else is playing here to sum with. */}
+      <Sequence durationInFrames={45} name="SFX jingle">
+        <Audio src={staticFile("sfx/jingle.mp3")} volume={7.5} />
+      </Sequence>
+      {/* Source is 1.032s; trimmed to end with the gap at 625 so it does not
+          ring over the start of scene 3's narration. */}
+      <Sequence from={600} durationInFrames={26} name="SFX bark">
+        <Audio src={staticFile("sfx/bark.mp3")} volume={0.6} />
+      </Sequence>
+      {/* Source is 9.552s, shorter than this 370-frame window, so it loops. */}
+      <Sequence from={626} durationInFrames={370} name="SFX panting">
+        <Audio src={staticFile("sfx/panting.mp3")} volume={0.15} loop />
+      </Sequence>
+      {/* Source is 5.352s; trimmed to the outro card, which ends the video.
+          Its loudest events are at 1.75s and 2.50s, past the head this window
+          would otherwise keep, so playback starts at frame 51 (1.70s) — just
+          before the 1.75s attack. */}
+      <Sequence from={1625} durationInFrames={55} name="SFX huff">
+        <Audio
+          src={staticFile("sfx/huff.mp3")}
+          volume={0.5}
+          trimBefore={51}
+        />
+      </Sequence>
 
       {/* ---------------- Burned-in captions ---------------- */}
       <Captions />
