@@ -8,18 +8,36 @@ const PANEL = "#4F7A3A";
 const INSET = "#22381A";
 const EYE = "#F5A623";
 
-export const RetroRobot: React.FC = () => (
+// Every prop defaults to the palette above and to a stroke scale of 1, so
+// callers that pass nothing render exactly as before.
+export const RetroRobot: React.FC<{
+  fill?: string;
+  edge?: string;
+  panel?: string;
+  inset?: string;
+  eye?: string;
+  shadow?: string;
+  strokeScale?: number;
+}> = ({
+  fill = FILL,
+  edge = EDGE,
+  panel = PANEL,
+  inset = INSET,
+  eye = EYE,
+  shadow = "#050B04",
+  strokeScale = 1,
+}) => (
   <g transform="translate(0 -22)">
     <defs>
       <radialGradient id="eyeGlow">
-        <stop offset="0%" stopColor={EYE} stopOpacity={0.8} />
-        <stop offset="45%" stopColor={EYE} stopOpacity={0.22} />
-        <stop offset="100%" stopColor={EYE} stopOpacity={0} />
+        <stop offset="0%" stopColor={eye} stopOpacity={0.8} />
+        <stop offset="45%" stopColor={eye} stopOpacity={0.22} />
+        <stop offset="100%" stopColor={eye} stopOpacity={0} />
       </radialGradient>
     </defs>
 
     {/* Contact shadow on the floor of the picture */}
-    <ellipse cx={340} cy={474} rx={118} ry={13} fill="#050B04" opacity={0.55} />
+    <ellipse cx={340} cy={474} rx={118} ry={13} fill={shadow} opacity={0.55} />
 
     {/* Antenna with ball finial */}
     <line
@@ -27,11 +45,18 @@ export const RetroRobot: React.FC = () => (
       y1={150}
       x2={340}
       y2={106}
-      stroke={EDGE}
-      strokeWidth={4}
+      stroke={edge}
+      strokeWidth={4 * strokeScale}
       strokeLinecap="round"
     />
-    <circle cx={340} cy={96} r={10} fill={FILL} stroke={EDGE} strokeWidth={4} />
+    <circle
+      cx={340}
+      cy={96}
+      r={10}
+      fill={fill}
+      stroke={edge}
+      strokeWidth={4 * strokeScale}
+    />
 
     {/* Arms, drawn behind the torso */}
     {[
@@ -43,9 +68,9 @@ export const RetroRobot: React.FC = () => (
           cx={a.sx}
           cy={276}
           r={13}
-          fill={FILL}
-          stroke={EDGE}
-          strokeWidth={3}
+          fill={fill}
+          stroke={edge}
+          strokeWidth={3 * strokeScale}
         />
         <rect
           x={a.ux}
@@ -53,17 +78,17 @@ export const RetroRobot: React.FC = () => (
           width={25}
           height={54}
           rx={8}
-          fill={FILL}
-          stroke={EDGE}
-          strokeWidth={3}
+          fill={fill}
+          stroke={edge}
+          strokeWidth={3 * strokeScale}
         />
         <circle
           cx={a.sx}
           cy={340}
           r={11}
-          fill={FILL}
-          stroke={EDGE}
-          strokeWidth={3}
+          fill={fill}
+          stroke={edge}
+          strokeWidth={3 * strokeScale}
         />
         <rect
           x={a.ux}
@@ -71,9 +96,9 @@ export const RetroRobot: React.FC = () => (
           width={25}
           height={50}
           rx={8}
-          fill={FILL}
-          stroke={EDGE}
-          strokeWidth={3}
+          fill={fill}
+          stroke={edge}
+          strokeWidth={3 * strokeScale}
         />
         <rect
           x={a.hx}
@@ -81,9 +106,9 @@ export const RetroRobot: React.FC = () => (
           width={33}
           height={20}
           rx={5}
-          fill={FILL}
-          stroke={EDGE}
-          strokeWidth={3}
+          fill={fill}
+          stroke={edge}
+          strokeWidth={3 * strokeScale}
         />
       </g>
     ))}
@@ -95,9 +120,9 @@ export const RetroRobot: React.FC = () => (
       width={42}
       height={58}
       rx={6}
-      fill={FILL}
-      stroke={EDGE}
-      strokeWidth={3}
+      fill={fill}
+      stroke={edge}
+      strokeWidth={3 * strokeScale}
     />
     <rect
       x={344}
@@ -105,9 +130,9 @@ export const RetroRobot: React.FC = () => (
       width={42}
       height={58}
       rx={6}
-      fill={FILL}
-      stroke={EDGE}
-      strokeWidth={3}
+      fill={fill}
+      stroke={edge}
+      strokeWidth={3 * strokeScale}
     />
     <rect
       x={280}
@@ -115,9 +140,9 @@ export const RetroRobot: React.FC = () => (
       width={58}
       height={20}
       rx={5}
-      fill={FILL}
-      stroke={EDGE}
-      strokeWidth={3}
+      fill={fill}
+      stroke={edge}
+      strokeWidth={3 * strokeScale}
     />
     <rect
       x={342}
@@ -125,11 +150,11 @@ export const RetroRobot: React.FC = () => (
       width={58}
       height={20}
       rx={5}
-      fill={FILL}
-      stroke={EDGE}
-      strokeWidth={3}
+      fill={fill}
+      stroke={edge}
+      strokeWidth={3 * strokeScale}
     />
-    <rect x={296} y={386} width={88} height={16} rx={4} fill={FILL} />
+    <rect x={296} y={386} width={88} height={16} rx={4} fill={fill} />
 
     {/* Torso */}
     <rect
@@ -138,9 +163,9 @@ export const RetroRobot: React.FC = () => (
       width={144}
       height={132}
       rx={10}
-      fill={FILL}
-      stroke={EDGE}
-      strokeWidth={4}
+      fill={fill}
+      stroke={edge}
+      strokeWidth={4 * strokeScale}
     />
 
     {/* Control panel detail */}
@@ -150,26 +175,35 @@ export const RetroRobot: React.FC = () => (
       width={88}
       height={52}
       rx={5}
-      fill={INSET}
-      stroke={EDGE}
-      strokeWidth={2}
+      fill={inset}
+      stroke={edge}
+      strokeWidth={2 * strokeScale}
     />
     {[312, 340, 368].map((cx) => (
-      <circle key={cx} cx={cx} cy={302} r={6} fill={PANEL} />
+      <circle key={cx} cx={cx} cy={302} r={6} fill={panel} />
     ))}
-    <rect x={306} y={316} width={72} height={5} rx={2.5} fill={PANEL} />
+    <rect x={306} y={316} width={72} height={5} rx={2.5} fill={panel} />
     <rect
       x={306}
       y={326}
       width={48}
       height={5}
       rx={2.5}
-      fill={PANEL}
+      fill={panel}
       opacity={0.7}
     />
 
     {/* Neck */}
-    <rect x={318} y={248} width={44} height={14} rx={3} fill={FILL} stroke={EDGE} strokeWidth={3} />
+    <rect
+      x={318}
+      y={248}
+      width={44}
+      height={14}
+      rx={3}
+      fill={fill}
+      stroke={edge}
+      strokeWidth={3 * strokeScale}
+    />
 
     {/* Head */}
     <rect
@@ -178,22 +212,22 @@ export const RetroRobot: React.FC = () => (
       width={124}
       height={100}
       rx={8}
-      fill={FILL}
-      stroke={EDGE}
-      strokeWidth={4}
+      fill={fill}
+      stroke={edge}
+      strokeWidth={4 * strokeScale}
     />
 
     {/* Glowing eyes — the only warm colour in the frame */}
     {[310, 370].map((cx) => (
       <g key={cx}>
         <circle cx={cx} cy={190} r={30} fill="url(#eyeGlow)" />
-        <circle cx={cx} cy={190} r={13} fill={EYE} />
+        <circle cx={cx} cy={190} r={13} fill={eye} />
       </g>
     ))}
 
     {/* Mouth grille */}
     {[216, 225, 234].map((y) => (
-      <rect key={y} x={302} y={y} width={76} height={5} rx={2.5} fill={EDGE} />
+      <rect key={y} x={302} y={y} width={76} height={5} rx={2.5} fill={edge} />
     ))}
   </g>
 );
